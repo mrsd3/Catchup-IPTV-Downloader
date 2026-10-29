@@ -24,11 +24,13 @@ mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 if [[ $RELEASE == 1 ]]; then
   # Une compilation par architecture puis fusion avec lipo : fonctionne aussi avec
   # les seuls Command Line Tools (--arch arm64 --arch x86_64 exige Xcode complet).
+  # Un dossier de compilation par architecture : partagé, SwiftPM échoue au 2e passage.
   BINS=()
   for arch in arm64 x86_64; do
     echo "▸ Compilation (release, $arch)…"
-    swift build -c release --triple "$arch-apple-macosx14.0"
-    BINS+=("$(swift build -c release --triple "$arch-apple-macosx14.0" --show-bin-path)/CatchupDownloader")
+    opts=(-c release --triple "$arch-apple-macosx14.0" --scratch-path ".build/universal-$arch")
+    swift build "${opts[@]}"
+    BINS+=("$(swift build "${opts[@]}" --show-bin-path)/CatchupDownloader")
   done
   echo "▸ Fusion en binaire universel…"
   lipo -create "${BINS[@]}" -output "$APP/Contents/MacOS/$APP_NAME"
