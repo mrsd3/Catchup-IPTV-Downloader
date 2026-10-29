@@ -4,7 +4,7 @@ App macOS native (SwiftUI) pour télécharger les replays (catchup / `tv_archive
 abonnement IPTV compatible **Xtream Codes**, en choisissant directement les émissions dans le
 guide des programmes.
 
-![Catchup : liste des chaînes et guide des programmes](docs/screenshot.png)
+![Catchup : liste des chaînes et guide des programmes](docs/catchup-v1.png)
 
 > Catchup est un simple client : il ne fournit aucune chaîne ni aucun abonnement. Vous devez
 > disposer de vos propres identifiants auprès d'un fournisseur, et respecter les droits des
