@@ -87,12 +87,59 @@ struct OnboardingView: View {
 struct SettingsView: View {
     var body: some View {
         TabView {
+            GeneralSettings()
+                .tabItem { Label("Général", systemImage: "gearshape") }
             ServerSettings()
                 .tabItem { Label("Serveur", systemImage: "server.rack") }
             DownloadSettings()
                 .tabItem { Label("Téléchargement", systemImage: "arrow.down.circle") }
         }
         .frame(width: 520)
+    }
+}
+
+private struct GeneralSettings: View {
+    /// "system" ou un code de langue. Appliqué via AppleLanguages, lu par macOS au lancement de l'app.
+    @AppStorage("appLanguage") private var language = "system"
+    @State private var changed = false
+
+    var body: some View {
+        Form {
+            Section {
+                Picker("Langue", selection: $language) {
+                    Text("Langue du système").tag("system")
+                    Text(verbatim: "Français").tag("fr")
+                    Text(verbatim: "English").tag("en")
+                }
+            } footer: {
+                if changed {
+                    HStack {
+                        Text("La nouvelle langue sera utilisée au prochain lancement.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button("Relancer maintenant") { relaunch() }
+                    }
+                }
+            }
+        }
+        .formStyle(.grouped)
+        .onChange(of: language) { _, new in
+            if new == "system" {
+                UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+            } else {
+                UserDefaults.standard.set([new], forKey: "AppleLanguages")
+            }
+            changed = true
+        }
+    }
+
+    private func relaunch() {
+        let config = NSWorkspace.OpenConfiguration()
+        config.createsNewApplicationInstance = true
+        NSWorkspace.shared.openApplication(at: Bundle.main.bundleURL, configuration: config) { _, _ in
+            DispatchQueue.main.async { NSApp.terminate(nil) }
+        }
     }
 }
 
@@ -143,8 +190,8 @@ private struct ServerSettings: View {
 
     private var offsetLabel: String {
         let h = store.serverOffset / 3600
-        if h == 0 { return "aucun" }
-        return String(format: "%+.2g h", h).replacingOccurrences(of: ".", with: ",")
+        if h == 0 { return String(localized: "aucun") }
+        return String(format: "%+.2g h", locale: DateFormats.appLocale, h)
     }
 
     private func test() async {
@@ -154,7 +201,7 @@ private struct ServerSettings: View {
         cfg.normalize()
         do {
             try await XtreamClient(config: cfg).authenticate()
-            status = (true, "Connexion réussie")
+            status = (true, String(localized: "Connexion réussie"))
         } catch {
             status = (false, error.localizedDescription)
         }
@@ -168,7 +215,7 @@ private struct ServerSettings: View {
         do {
             try store.saveConfig(cfg)
             if let cfg = store.config { draft = cfg }
-            status = (true, "Réglages enregistrés")
+            status = (true, String(localized: "Réglages enregistrés"))
             Task { await store.loadChannels() }
         } catch {
             status = (false, error.localizedDescription)

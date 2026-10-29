@@ -87,10 +87,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         guard let downloads, downloads.activeCount > 0 else { return .terminateNow }
         let alert = NSAlert()
-        alert.messageText = "Des téléchargements sont en cours"
-        alert.informativeText = "Quitter les arrêtera. Les fichiers déjà commencés seront conservés jusqu'au point atteint."
-        alert.addButton(withTitle: "Quitter")
-        alert.addButton(withTitle: "Annuler")
+        alert.messageText = String(localized: "Des téléchargements sont en cours")
+        alert.informativeText = String(localized: "Quitter les arrêtera. Les fichiers déjà commencés seront conservés jusqu'au point atteint.")
+        alert.addButton(withTitle: String(localized: "Quitter"))
+        alert.addButton(withTitle: String(localized: "Annuler"))
         guard alert.runModal() == .alertFirstButtonReturn else { return .terminateCancel }
         downloads.stopAll()
         // Laisse à ffmpeg le temps de finaliser les fichiers.

@@ -42,6 +42,7 @@ fi
 
 echo "▸ Assemblage du bundle…"
 cp Sources/CatchupDownloader/Info.plist "$APP/Contents/Info.plist"
+cp -R Resources/*.lproj "$APP/Contents/Resources/"  # traductions
 
 echo "▸ Icône…"
 ICONSET="build/AppIcon.iconset"

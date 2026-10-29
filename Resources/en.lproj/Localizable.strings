@@ -1,0 +1,148 @@
+/* Traduction anglaise. Clé = texte français du code ; %lld = nombre, %@ = texte, %d = code. */
+
+/* Menus, fenêtre, fermeture */
+"Chaînes" = "Channels";
+"Actualiser la liste" = "Refresh List";
+"Des téléchargements sont en cours" = "Downloads are in progress";
+"Quitter les arrêtera. Les fichiers déjà commencés seront conservés jusqu'au point atteint." = "Quitting will stop them. Files already started will be kept up to the point reached.";
+"Quitter" = "Quit";
+"Annuler" = "Cancel";
+
+/* Accueil et réglages */
+"Récupérez les replays de votre abonnement IPTV (Xtream Codes)." = "Download catch-up recordings from your IPTV subscription (Xtream Codes).";
+"Serveur" = "Server";
+"iptv.exemple.com" = "iptv.example.com";
+"Identifiant" = "Username";
+"Mot de passe" = "Password";
+"Se connecter" = "Sign In";
+"Les identifiants sont enregistrés dans ~/.catchup_config.json, comme pour la version en ligne de commande." = "Credentials are saved in ~/.catchup_config.json, like the command-line version.";
+"Général" = "General";
+"Langue" = "Language";
+"Langue du système" = "System Language";
+"La nouvelle langue sera utilisée au prochain lancement." = "The new language will be used the next time the app launches.";
+"Relancer maintenant" = "Relaunch Now";
+"Téléchargement" = "Downloads";
+"Format d'URL replay" = "Catch-up URL format";
+"Décalage horaire serveur" = "Server time offset";
+"aucun" = "none";
+"Si les téléchargements échouent ou sont décalés, essayez un autre format : chaque fournisseur a le sien. Le décalage horaire est détecté automatiquement à partir du guide des programmes." = "If downloads fail or are shifted in time, try another format: each provider has its own. The time offset is detected automatically from the TV guide.";
+"Tester" = "Test";
+"Enregistrer" = "Save";
+"Connexion réussie" = "Connection successful";
+"Réglages enregistrés" = "Settings saved";
+"Destination" = "Destination";
+"Dossier" = "Folder";
+"Choisir…" = "Choose…";
+"Marges par défaut (mode Programmes)" = "Default margins (Programs mode)";
+"Avant le début : %lld min" = "Before start: %lld min";
+"Après la fin : %lld min" = "After end: %lld min";
+"Utilisé" = "In use";
+"FFmpeg introuvable — installez-le avec « brew install ffmpeg »." = "FFmpeg not found — install it with “brew install ffmpeg”.";
+"Choisir un exécutable…" = "Choose Executable…";
+"1 — /timeshift/…/AAAA-MM-JJ:HH-MM/id.ts (standard)" = "1 — /timeshift/…/YYYY-MM-DD:HH-MM/id.ts (standard)";
+"4 — /timeshift/…/AAAA-MM-JJ:HH:MM/id.ts" = "4 — /timeshift/…/YYYY-MM-DD:HH:MM/id.ts";
+"5 — /timeshift/…/id (sans .ts)" = "5 — /timeshift/…/id (no .ts)";
+
+/* Barre latérale et liste des chaînes */
+"Bibliothèque" = "Library";
+"Avec replay" = "With Catch-up";
+"Favoris" = "Favorites";
+"Toutes les chaînes" = "All Channels";
+"Catégories" = "Categories";
+"Catégorie" = "Category";
+"Chargement des chaînes…" = "Loading channels…";
+"Connexion impossible" = "Unable to Connect";
+"Réessayer" = "Try Again";
+"Réglages…" = "Settings…";
+"%lld chaînes · %lld avec replay" = "%lld channels · %lld with catch-up";
+"Actualiser la liste (⌘R)" = "Refresh list (⌘R)";
+"Rechercher une chaîne" = "Search channels";
+"Retirer des favoris" = "Remove from Favorites";
+"Ajouter aux favoris" = "Add to Favorites";
+"%lld chaînes" = "%lld channels";
+"%lld chaîne" = "%lld channel";
+"Aucun favori" = "No Favorites";
+"Clic droit sur une chaîne pour l'ajouter aux favoris." = "Right-click a channel to add it to your favorites.";
+"Aucune chaîne" = "No Channels";
+"%lld j" = "%lldd";
+"Replay disponible sur %lld jours" = "Catch-up available for %lld days";
+"Choisissez une chaîne" = "Choose a Channel";
+"Sélectionnez une chaîne pour voir ses programmes en replay." = "Select a channel to see its catch-up programs.";
+"Sans nom" = "Untitled";
+"Chaîne %lld" = "Channel %lld";
+"Sans titre" = "Untitled";
+
+/* Fiche chaîne et guide */
+"Programmes" = "Programs";
+"Plage personnalisée" = "Custom Range";
+"Pas de replay sur cette chaîne" = "No Catch-up on This Channel";
+"Le fournisseur n'a pas activé le catchup (tv_archive) pour « %@ »." = "The provider hasn't enabled catch-up (tv_archive) for “%@”.";
+"Replay sur %lld jours" = "Catch-up for %lld days";
+"Replay disponible" = "Catch-up available";
+"Favori" = "Favorite";
+"Chargement du guide…" = "Loading guide…";
+"Guide indisponible" = "Guide Unavailable";
+"Aucun programme" = "No Programs";
+"Le fournisseur ne fournit pas de guide pour cette chaîne. Utilisez une plage personnalisée." = "The provider has no guide for this channel. Use a custom range.";
+"Aujourd'hui" = "Today";
+"Hier" = "Yesterday";
+"Demain" = "Tomorrow";
+"Marge avant : %lld min" = "Margin before: %lld min";
+"Marge après : %lld min" = "Margin after: %lld min";
+"Avant : %lld min" = "Before: %lld min";
+"Après : %lld min" = "After: %lld min";
+"Actualiser le guide" = "Refresh Guide";
+"Impossible de lancer le téléchargement" = "Unable to Start Download";
+"La fin doit être après le début." = "The end must be after the start.";
+"EN DIRECT" = "LIVE";
+"En cours" = "On air";
+"En file d'attente" = "Queued";
+"Téléchargé" = "Downloaded";
+"Échec — relancer" = "Failed — retry";
+"Télécharger ce programme" = "Download this program";
+
+/* Plage personnalisée */
+"Plage horaire" = "Time Range";
+"Début" = "Start";
+"Fin" = "End";
+"Durée" = "Duration";
+"Raccourcis" = "Shortcuts";
+"Dernière heure" = "Last Hour";
+"Télécharger" = "Download";
+"La fin doit être postérieure au début." = "The end must be after the start.";
+"La fin est dans le futur : le replay n'existe pas encore." = "The end is in the future: the recording doesn't exist yet.";
+"Le début dépasse la durée de replay de la chaîne (%lld jours)." = "The start is beyond the channel's catch-up window (%lld days).";
+"Plage supérieure à 12 h — réduisez-la." = "Range longer than 12 h — please shorten it.";
+
+/* Téléchargements */
+"Téléchargements" = "Downloads";
+"Effacer" = "Clear";
+"Retirer les téléchargements terminés de la liste" = "Remove finished downloads from the list";
+"Aucun téléchargement" = "No Downloads";
+"Cliquez sur ⬇︎ à côté d'un programme pour le récupérer." = "Click ⬇︎ next to a program to download it.";
+"Ouvrir le dossier de destination" = "Open destination folder";
+"Simultanés" = "Simultaneous";
+"En attente…" = "Waiting…";
+"Vitesse par rapport au temps réel" = "Speed relative to real time";
+"Terminé · %@" = "Done · %@";
+"Arrêté" = "Stopped";
+"Copier l'URL du flux" = "Copy Stream URL";
+"Afficher le journal FFmpeg" = "Show FFmpeg Log";
+"Retirer de la liste" = "Remove from List";
+"Arrêter" = "Stop";
+"Ouvrir" = "Open";
+"Afficher dans le Finder" = "Show in Finder";
+"Relancer" = "Retry";
+"Plage manuelle" = "Custom range";
+"FFmpeg introuvable. Installez-le avec « brew install ffmpeg »." = "FFmpeg not found. Install it with “brew install ffmpeg”.";
+"Impossible de lancer FFmpeg : %@" = "Unable to launch FFmpeg: %@";
+"FFmpeg a terminé avec le code %d." = "FFmpeg exited with code %d.";
+"Téléchargement terminé" = "Download Complete";
+"Échec du téléchargement" = "Download Failed";
+
+/* Erreurs serveur */
+"Adresse du serveur invalide." = "Invalid server address.";
+"Le serveur a répondu avec l'erreur HTTP %lld." = "The server responded with HTTP error %lld.";
+"Impossible de joindre le serveur — %@" = "Unable to reach the server — %@";
+"Identifiants refusés par le serveur." = "The server rejected the credentials.";
+"Réponse inattendue de l'API (%@)." = "Unexpected API response (%@).";

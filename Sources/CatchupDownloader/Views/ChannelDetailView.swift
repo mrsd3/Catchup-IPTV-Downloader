@@ -27,7 +27,7 @@ struct ChannelDetailView: View {
                                        description: Text("Le fournisseur n'a pas activé le catchup (tv_archive) pour « \(stream.name) »."))
             } else {
                 Picker("", selection: $mode) {
-                    ForEach(Mode.allCases) { Text($0.rawValue).tag($0) }
+                    ForEach(Mode.allCases) { Text(LocalizedStringKey($0.rawValue)).tag($0) }
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
@@ -65,8 +65,11 @@ struct ChannelDetailView: View {
                         Text(cat)
                     }
                     if stream.hasArchive {
-                        Label(stream.archiveDays > 0 ? "Replay sur \(stream.archiveDays) jours" : "Replay disponible",
-                              systemImage: "clock.arrow.circlepath")
+                        Label {
+                            stream.archiveDays > 0 ? Text("Replay sur \(stream.archiveDays) jours") : Text("Replay disponible")
+                        } icon: {
+                            Image(systemName: "clock.arrow.circlepath")
+                        }
                     }
                 }
                 .font(.callout)
@@ -202,10 +205,12 @@ struct ChannelDetailView: View {
 
     private func marginBarContent(compact: Bool) -> some View {
         HStack(spacing: compact ? 10 : 16) {
-            Stepper(compact ? "Avant : \(marginBefore) min" : "Marge avant : \(marginBefore) min",
-                    value: $marginBefore, in: 0...30)
-            Stepper(compact ? "Après : \(marginAfter) min" : "Marge après : \(marginAfter) min",
-                    value: $marginAfter, in: 0...60)
+            Stepper(value: $marginBefore, in: 0...30) {
+                compact ? Text("Avant : \(marginBefore) min") : Text("Marge avant : \(marginBefore) min")
+            }
+            Stepper(value: $marginAfter, in: 0...60) {
+                compact ? Text("Après : \(marginAfter) min") : Text("Marge après : \(marginAfter) min")
+            }
             Spacer(minLength: 0)
             Button {
                 Task { await store.loadEPG(for: stream, force: true) }
@@ -223,10 +228,10 @@ struct ChannelDetailView: View {
 
     private func dayLabel(_ day: Date) -> String {
         let cal = Calendar.current
-        if cal.isDateInToday(day) { return "Aujourd'hui" }
-        if cal.isDateInYesterday(day) { return "Hier" }
-        if cal.isDateInTomorrow(day) { return "Demain" }
-        return DateFormats.dayHeader.string(from: day).capitalized
+        if cal.isDateInToday(day) { return String(localized: "Aujourd'hui") }
+        if cal.isDateInYesterday(day) { return String(localized: "Hier") }
+        if cal.isDateInTomorrow(day) { return String(localized: "Demain") }
+        return DateFormats.dayHeader.string(from: day).capitalized(with: DateFormats.appLocale)
     }
 
     private func canDownload(_ entry: EPGEntry) -> Bool {
@@ -246,7 +251,7 @@ struct ChannelDetailView: View {
 
     private func enqueue(title: String?, start: Date, end: Date) {
         guard let config = store.config else { return }
-        guard end > start else { errorMessage = "La fin doit être après le début."; return }
+        guard end > start else { errorMessage = String(localized: "La fin doit être après le début."); return }
         do {
             try downloads.enqueue(channel: stream, title: title, start: start, end: end,
                                   config: config, serverOffset: store.serverOffset)

@@ -24,10 +24,10 @@ struct ManualRangeView: View {
     }
 
     private var problem: String? {
-        if end <= start { return "La fin doit être postérieure au début." }
-        if end > Date().addingTimeInterval(60) { return "La fin est dans le futur : le replay n'existe pas encore." }
-        if start < earliest { return "Le début dépasse la durée de replay de la chaîne (\(stream.archiveDays) jours)." }
-        if end.timeIntervalSince(start) > 12 * 3600 { return "Plage supérieure à 12 h — réduisez-la." }
+        if end <= start { return String(localized: "La fin doit être postérieure au début.") }
+        if end > Date().addingTimeInterval(60) { return String(localized: "La fin est dans le futur : le replay n'existe pas encore.") }
+        if start < earliest { return String(localized: "Le début dépasse la durée de replay de la chaîne (\(stream.archiveDays) jours).") }
+        if end.timeIntervalSince(start) > 12 * 3600 { return String(localized: "Plage supérieure à 12 h — réduisez-la.") }
         return nil
     }
 

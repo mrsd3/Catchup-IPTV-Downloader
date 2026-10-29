@@ -38,7 +38,7 @@ struct DownloadsPanel: View {
                 Button {
                     if let dir = store.config?.outputDirectory { NSWorkspace.shared.open(dir) }
                 } label: {
-                    Label(store.config?.outputDirectory.lastPathComponent ?? "Dossier", systemImage: "folder")
+                    Label(store.config?.outputDirectory.lastPathComponent ?? String(localized: "Dossier"), systemImage: "folder")
                         .lineLimit(1)
                         .truncationMode(.middle)
                 }
@@ -164,7 +164,7 @@ struct DownloadRow: View {
         }
     }
 
-    private func iconButton(_ symbol: String, _ help: String, action: @escaping () -> Void) -> some View {
+    private func iconButton(_ symbol: String, _ help: LocalizedStringKey, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: symbol)
                 .font(.title3)

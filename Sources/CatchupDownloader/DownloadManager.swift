@@ -47,7 +47,7 @@ final class DownloadJob: Identifiable {
         guard state == .running, let startedAt, elapsed > 0 else { return nil }
         let wall = Date().timeIntervalSince(startedAt)
         guard wall > 2 else { return nil }
-        return String(format: "×%.1f", Double(elapsed) / wall).replacingOccurrences(of: ".", with: ",")
+        return String(format: "×%.1f", locale: DateFormats.appLocale, Double(elapsed) / wall)
     }
 }
 
@@ -79,7 +79,7 @@ final class DownloadManager {
         let url = client.catchupURL(streamID: channel.streamID, start: start, end: end, serverOffset: serverOffset)
         let output = try Self.outputURL(dir: config.outputDirectory, channel: channel.name, title: title, start: start, end: end,
                                         reserved: Set(jobs.filter(\.isActive).map(\.output)))
-        let job = DownloadJob(channelName: channel.name, title: title ?? "Plage manuelle",
+        let job = DownloadJob(channelName: channel.name, title: title ?? String(localized: "Plage manuelle"),
                               start: start, end: end, sourceURL: url, output: output)
         jobs.insert(job, at: 0)
         pump(ffmpegPath: config.ffmpegPath)
@@ -132,7 +132,7 @@ final class DownloadManager {
 
     private func launch(_ job: DownloadJob) {
         guard let ffmpeg = Self.findFFmpeg(custom: lastFFmpegPath) else {
-            job.state = .failed("FFmpeg introuvable. Installez-le avec « brew install ffmpeg ».")
+            job.state = .failed(String(localized: "FFmpeg introuvable. Installez-le avec « brew install ffmpeg »."))
             return
         }
         try? FileManager.default.createDirectory(at: job.output.deletingLastPathComponent(), withIntermediateDirectories: true)
@@ -188,7 +188,7 @@ final class DownloadManager {
             job.state = .running
             job.startedAt = Date()
         } catch {
-            job.state = .failed("Impossible de lancer FFmpeg : \(error.localizedDescription)")
+            job.state = .failed(String(localized: "Impossible de lancer FFmpeg : \(error.localizedDescription)"))
         }
     }
 
@@ -207,7 +207,7 @@ final class DownloadManager {
                 await MainActor.run {
                     job.elapsed = job.totalSeconds
                     job.state = .finished
-                    Notifier.send(title: "Téléchargement terminé", body: "\(job.channelName) — \(job.title)")
+                    Notifier.send(title: String(localized: "Téléchargement terminé"), body: "\(job.channelName) — \(job.title)")
                 }
             }
             return
@@ -220,8 +220,8 @@ final class DownloadManager {
             } else {
                 hint = lines.last
             }
-            job.state = .failed(hint ?? "FFmpeg a terminé avec le code \(status).")
-            Notifier.send(title: "Échec du téléchargement", body: "\(job.channelName) — \(job.title)")
+            job.state = .failed(hint ?? String(localized: "FFmpeg a terminé avec le code \(status)."))
+            Notifier.send(title: String(localized: "Échec du téléchargement"), body: "\(job.channelName) — \(job.title)")
         }
         pump()
     }

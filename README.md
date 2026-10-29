@@ -1,68 +1,78 @@
-# Catchup — IPTV Catchup Downloader pour macOS
+# Catchup — IPTV Catch-up Downloader for macOS
 
-App macOS native (SwiftUI) pour télécharger les replays (catchup / `tv_archive`) d'un
-abonnement IPTV compatible **Xtream Codes**, en choisissant directement les émissions dans le
-guide des programmes.
+**English** · [Français](README.fr.md)
 
-![Catchup : liste des chaînes et guide des programmes](docs/catchup-v1.png)
+A native macOS app (SwiftUI) to download catch-up recordings (`tv_archive`) from an IPTV
+subscription compatible with **Xtream Codes**, picking shows straight from the TV guide.
 
-> Catchup est un simple client : il ne fournit aucune chaîne ni aucun abonnement. Vous devez
-> disposer de vos propres identifiants auprès d'un fournisseur, et respecter les droits des
-> contenus que vous téléchargez.
+![Catchup: channel list and TV guide](docs/catchup-v1.png)
 
-## Fonctionnalités
+> Catchup is only a client: it does not provide any channels or subscription. You need your own
+> credentials from a provider, and you are responsible for respecting the rights of the content
+> you download.
 
-- **Guide des programmes** : on choisit une émission dans l'EPG et on clique ⬇︎, plus besoin de taper des heures.
-- **Marges** avant/après réglables (2 et 5 min par défaut) pour ne pas rater le début ou la fin.
-- **Plage personnalisée** quand le fournisseur n'a pas de guide.
-- **Téléchargements** dans une bulle accessible depuis la barre d'outils (comme dans un navigateur) :
-  file en parallèle (1 à 4), progression, vitesse, arrêt/relance, journal FFmpeg.
-- **Fichiers MP4 lisibles partout** : vidéo copiée sans perte, son converti en AAC (le MP2 de la TNT
-  n'est pas lu par QuickTime), début recalé sur la première image (pas d'écran noir au démarrage).
-- **Catégories, recherche, favoris**, filtre « avec replay ».
-- **Décalage horaire serveur** détecté automatiquement depuis l'EPG (corrige les replays décalés d'une heure).
-- Reconnexion automatique de FFmpeg en cas de coupure, notification à la fin.
+## Features
+
+- **TV guide**: pick a show in the EPG and click ⬇︎ — no need to type times.
+- **Margins** before/after (2 and 5 min by default) so you never miss the beginning or the end.
+- **Custom time range** when the provider has no guide.
+- **Downloads** in a toolbar popover (like a web browser): parallel queue (1 to 4), progress,
+  speed, stop/retry, FFmpeg log.
+- **MP4 files that play everywhere**: video copied losslessly, audio converted to AAC (QuickTime
+  can't play the MP2 audio used by broadcast TV), start trimmed to the first frame (no black screen).
+- **Categories, search, favorites**, "with catch-up" filter.
+- **Server time offset** detected automatically from the EPG (fixes recordings shifted by an hour).
+- Automatic FFmpeg reconnection if the stream drops, notification when done.
+- **English and French**: follows the macOS language, can be changed in Settings → General.
 
 ## Installation
 
-### App toute faite
+### Ready-made app
 
-1. Téléchargez `Catchup.zip` dans les [Releases](../../releases), décompressez-le et glissez
-   `Catchup.app` dans **Applications**.
-2. Installez FFmpeg (indispensable) : `brew install ffmpeg` (voir [Homebrew](https://brew.sh)).
-3. Au premier lancement, macOS bloque l'app car elle n'est pas notarisée par Apple :
-   ouvrez **Réglages Système → Confidentialité et sécurité**, puis **Ouvrir quand même**.
-   Une seule fois.
+1. Download `Catchup.zip` from the [Releases](../../releases), unzip it and drag `Catchup.app`
+   into **Applications**.
+2. Install FFmpeg (required): `brew install ffmpeg` (see [Homebrew](https://brew.sh)).
+3. On first launch, macOS blocks the app because it isn't notarized by Apple:
+   open **System Settings → Privacy & Security**, then click **Open Anyway**. Only once.
 
-Fonctionne sur macOS 14 Sonoma ou plus récent, Mac Apple Silicon et Intel.
+Requires macOS 14 Sonoma or later, on Apple Silicon and Intel Macs.
 
-### Depuis les sources
+### From source
 
-Prérequis : Xcode 15+ ou les Command Line Tools (`xcode-select --install`), et FFmpeg.
+Requirements: Xcode 15+ or the Command Line Tools (`xcode-select --install`), and FFmpeg.
 
 ```bash
-./build_app.sh              # → build/Catchup.app (architecture du Mac courant)
-./build_app.sh --install    # → copie aussi dans /Applications
-./build_app.sh --release    # → app universelle + build/Catchup.zip à joindre à une release
+./build_app.sh              # → build/Catchup.app (current Mac's architecture)
+./build_app.sh --install    # → also copies it to /Applications
+./build_app.sh --release    # → universal app + build/Catchup.zip to attach to a release
 ```
 
-Pour développer : `swift run` lance l'app directement, ou `open Package.swift` pour l'ouvrir dans Xcode.
+For development: `swift run` launches the app directly, or `open Package.swift` to open it in Xcode.
 
-## Réglages (⌘,)
+## Settings (⌘,)
 
-- **Serveur** : adresse, identifiants, format d'URL replay (si les téléchargements échouent, essayez un autre format), décalage horaire détecté.
-- **Téléchargement** : dossier de destination (`~/Downloads` par défaut), marges, chemin de FFmpeg.
+- **General**: app language (system, English or French).
+- **Server**: address, credentials, catch-up URL format (if downloads fail, try another format),
+  detected time offset.
+- **Downloads**: destination folder (`~/Downloads` by default), margins, FFmpeg path.
 
-La configuration est enregistrée dans `~/.catchup_config.json` (compatible avec le script
-`catchup_downloader.py` : si vous l'utilisiez déjà, l'app démarre directement connectée).
-Ce fichier contient vos identifiants : ne le partagez pas.
+The configuration is stored in `~/.catchup_config.json` (compatible with the
+`catchup_downloader.py` script: if you already used it, the app starts already connected).
+This file contains your credentials: don't share it.
 
-## Nom des fichiers
+## File names
 
 ```
-NomDeLaChaine_2026-10-28_2055-2250_Titre_du_programme.mp4
+ChannelName_2026-10-28_2055-2250_Program_title.mp4
 ```
 
-## Licence
+## Translations
+
+French is the base language of the code; the English translation lives in
+`Resources/en.lproj/Localizable.strings`. To add a language, copy that file into
+`Resources/<code>.lproj/`, translate the right-hand side, and add the code to
+`CFBundleLocalizations` in `Sources/CatchupDownloader/Info.plist`.
+
+## License
 
 [MIT](LICENSE)

@@ -84,7 +84,7 @@ struct LiveCategory: Decodable, Identifiable, Hashable {
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = c.flexString(.id) ?? UUID().uuidString
-        name = c.flexString(.name) ?? "Sans nom"
+        name = c.flexString(.name) ?? String(localized: "Sans nom")
     }
 }
 
@@ -109,7 +109,7 @@ struct LiveStream: Decodable, Identifiable, Hashable {
             throw DecodingError.dataCorruptedError(forKey: .streamID, in: c, debugDescription: "stream_id manquant")
         }
         streamID = sid
-        name = (c.flexString(.name) ?? "Chaîne \(sid)").trimmingCharacters(in: .whitespaces)
+        name = (c.flexString(.name) ?? String(localized: "Chaîne \(sid)")).trimmingCharacters(in: .whitespaces)
         if let s = c.flexString(.icon), !s.isEmpty { icon = URL(string: s) } else { icon = nil }
         categoryID = c.flexString(.categoryID)
         hasArchive = (c.flexInt(.tvArchive) ?? 0) == 1
@@ -140,7 +140,7 @@ struct EPGEntry: Decodable, Identifiable, Hashable {
 
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
-        let decodedTitle = Self.decodeBase64(c.flexString(.title)) ?? "Sans titre"
+        let decodedTitle = Self.decodeBase64(c.flexString(.title)) ?? String(localized: "Sans titre")
         title = decodedTitle
         summary = Self.decodeBase64(c.flexString(.description)) ?? ""
         hasArchive = (c.flexInt(.hasArchive) ?? 0) == 1
@@ -216,17 +216,20 @@ enum DateFormats {
         return f.string(from: date)
     }
 
+    /// Langue effectivement utilisée par l'app (celle choisie dans Réglages, sinon celle du système).
+    static let appLocale = Locale(identifier: Bundle.main.preferredLocalizations.first ?? "fr")
+
     static let time: DateFormatter = {
         let f = DateFormatter()
-        f.locale = Locale(identifier: "fr_FR")
+        f.locale = appLocale
         f.dateFormat = "HH:mm"
         return f
     }()
 
     static let dayHeader: DateFormatter = {
         let f = DateFormatter()
-        f.locale = Locale(identifier: "fr_FR")
-        f.dateFormat = "EEEE d MMMM"
+        f.locale = appLocale
+        f.setLocalizedDateFormatFromTemplate("EEEEdMMMM")  // « lundi 26 octobre » / « Monday, October 26 »
         return f
     }()
 

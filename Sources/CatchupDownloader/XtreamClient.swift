@@ -9,11 +9,11 @@ enum XtreamError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .badURL: return "Adresse du serveur invalide."
-        case .http(let code): return "Le serveur a répondu avec l'erreur HTTP \(code)."
-        case .unreachable(let why): return "Impossible de joindre le serveur — \(why)"
-        case .auth: return "Identifiants refusés par le serveur."
-        case .unexpected(let what): return "Réponse inattendue de l'API (\(what))."
+        case .badURL: return String(localized: "Adresse du serveur invalide.")
+        case .http(let code): return String(localized: "Le serveur a répondu avec l'erreur HTTP \(code).")
+        case .unreachable(let why): return String(localized: "Impossible de joindre le serveur — \(why)")
+        case .auth: return String(localized: "Identifiants refusés par le serveur.")
+        case .unexpected(let what): return String(localized: "Réponse inattendue de l'API (\(what)).")
         }
     }
 }
@@ -137,10 +137,10 @@ struct XtreamClient {
     }
 
     static let formatDescriptions: [(Int, String)] = [
-        (1, "1 — /timeshift/…/AAAA-MM-JJ:HH-MM/id.ts (standard)"),
+        (1, String(localized: "1 — /timeshift/…/AAAA-MM-JJ:HH-MM/id.ts (standard)")),
         (2, "2 — player_api.php?action=catchup"),
         (3, "3 — streaming/timeshift.php"),
-        (4, "4 — /timeshift/…/AAAA-MM-JJ:HH:MM/id.ts"),
-        (5, "5 — /timeshift/…/id (sans .ts)"),
+        (4, String(localized: "4 — /timeshift/…/AAAA-MM-JJ:HH:MM/id.ts")),
+        (5, String(localized: "5 — /timeshift/…/id (sans .ts)")),
     ]
 }

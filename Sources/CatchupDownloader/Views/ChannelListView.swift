@@ -13,14 +13,16 @@ struct ChannelListView: View {
                        isFavorite: store.favorites.contains(stream.streamID))
                 .tag(stream.streamID)
                 .contextMenu {
-                    Button(store.favorites.contains(stream.streamID) ? "Retirer des favoris" : "Ajouter aux favoris") {
+                    Button {
                         store.toggleFavorite(stream)
+                    } label: {
+                        store.favorites.contains(stream.streamID) ? Text("Retirer des favoris") : Text("Ajouter aux favoris")
                     }
                 }
         }
         .listStyle(.inset)
         .navigationTitle(title)
-        .navigationSubtitle("\(items.count) chaîne\(items.count > 1 ? "s" : "")")
+        .navigationSubtitle(items.count > 1 ? String(localized: "\(items.count) chaînes") : String(localized: "\(items.count) chaîne"))
         .overlay {
             if store.loadState == .loaded && items.isEmpty {
                 if !store.searchText.isEmpty {
@@ -42,10 +44,10 @@ struct ChannelListView: View {
 
     private var title: String {
         switch store.sidebarSelection ?? .all {
-        case .all: return "Toutes les chaînes"
-        case .catchup: return "Avec replay"
-        case .favorites: return "Favoris"
-        case .category(let id): return store.categories.first { $0.id == id }?.name ?? "Catégorie"
+        case .all: return String(localized: "Toutes les chaînes")
+        case .catchup: return String(localized: "Avec replay")
+        case .favorites: return String(localized: "Favoris")
+        case .category(let id): return store.categories.first { $0.id == id }?.name ?? String(localized: "Catégorie")
         }
     }
 }
@@ -71,7 +73,7 @@ struct ChannelRow: View {
             }
             Spacer(minLength: 4)
             if stream.hasArchive {
-                Text(stream.archiveDays > 0 ? "\(stream.archiveDays) j" : "replay")
+                (stream.archiveDays > 0 ? Text("\(stream.archiveDays) j") : Text("replay"))
                     .font(.caption2.weight(.semibold))
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)

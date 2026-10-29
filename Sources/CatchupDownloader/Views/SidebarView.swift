@@ -71,7 +71,7 @@ struct SidebarView: View {
         }
     }
 
-    private func row(_ item: SidebarItem, _ title: String, _ icon: String) -> some View {
+    private func row(_ item: SidebarItem, _ title: LocalizedStringKey, _ icon: String) -> some View {
         Label {
             HStack {
                 Text(title)
